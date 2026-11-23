@@ -212,8 +212,8 @@
   "navbar": {
     "links": [
       {
-        "label": "XDR Labs",
-        "href": "https://xdr.ooo"
+        "label": "ISOC Labs",
+        "href": "https://isoc.ooo"
       },
       {
         "type": "github",
@@ -236,14 +236,17 @@
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg",
-    "href": "https://parser.xdr.ooo"
+    "href": "https://parser.isoc.ooo"
   },
   "favicon": "/favicon.svg",
   "styling": {
     "eyebrows": "breadcrumbs"
   },
   "seo": {
-    "indexing": "navigable"
+    "indexing": "navigable",
+    "metatags": {
+      "canonical": "https://parser.isoc.ooo"
+    }
   },
   "metadata": {
     "timestamp": true
