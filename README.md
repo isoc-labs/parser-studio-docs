@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://parser.xdr.ooo/">User Guide</a> · <a href="quickstart.mdx">Quickstart</a> · <a href="scenarios/index.mdx">Scenario Playbooks</a> · <a href="https://github.com/isoc-labs/parser-studio">Application Source</a>
+  <a href="https://parser.isoc.ooo/">User Guide</a> · <a href="quickstart.mdx">Quickstart</a> · <a href="scenarios/index.mdx">Scenario Playbooks</a> · <a href="https://github.com/isoc-labs/parser-studio">Application Source</a>
 </p>
 
 <p align="center">
