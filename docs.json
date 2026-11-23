@@ -110,7 +110,7 @@
             },
             {
               "label": "영어 문서",
-              "href": "https://parser.xdr.ooo/"
+              "href": "https://parser.isoc.ooo/"
             }
           ],
           "primary": {
@@ -212,7 +212,7 @@
   "navbar": {
     "links": [
       {
-        "label": "XDR Labs",
+        "label": "ISOC Labs",
         "href": "https://isoc.ooo"
       },
       {
@@ -236,7 +236,7 @@
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg",
-    "href": "https://parser.xdr.ooo"
+    "href": "https://parser.isoc.ooo"
   },
   "favicon": "/favicon.svg",
   "styling": {
