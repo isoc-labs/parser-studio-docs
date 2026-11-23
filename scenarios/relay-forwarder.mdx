@@ -9,17 +9,17 @@ description: "Copy real published Fortinet logs and packets captured after forwa
 This scenario uses **real FortiGate Traffic and Web Filter example records published by Fortinet**, not fabricated firewall events. We submitted those unchanged messages over **UDP to an actual `rsyslogd` input**, configured `rsyslogd` to forward them with a new RFC3164 header, and captured the **UDP output bytes**. Paste that *captured post-relay output* below into Parser Studio: this is the exact input used to test the page.
 
 <Note>
-**Source versus transport evidence:** The security-event bodies are published vendor samples from [Fortinet's official log examples](https://docs.fortinet.com/document/fortigate/6.2.0/cookbook/986892/sample-logs-by-log-type). The **outer `relay01` header is not FortiGate output**: it is the real output of a separately launched rsyslogd on the lab server. The packet capture is not from a production network or live FortiGate appliance. All original vendor-message bytes were checked unchanged after forwarding. Parser Studio product reference: [main a4b4e2f](https://github.com/xdr-labs/parser-studio/commit/a4b4e2fba54588fa2b9807e1cfeed49190061927).
+**Source versus transport evidence:** The security-event bodies are published vendor samples from [Fortinet's official log examples](https://docs.fortinet.com/document/fortigate/6.2.0/cookbook/986892/sample-logs-by-log-type). The **outer `relay01` header is not FortiGate output**: it is the real output of a separately launched rsyslogd on the lab server. The packet capture is not from a production network or live FortiGate appliance. All original vendor-message bytes were checked unchanged after forwarding. Parser Studio product reference: [main a4b4e2f](https://github.com/isoc-labs/parser-studio/commit/a4b4e2fba54588fa2b9807e1cfeed49190061927).
 </Note>
 
 ## Download the exact inputs
 
-- [Original published FortiGate Traffic log, 2 lines](https://raw.githubusercontent.com/xdr-labs/parser-studio-docs/main/practice/05-relay-original.log) — **before** relay forwarding.
-- [Actual rsyslog forwarded capture, 2 lines](https://raw.githubusercontent.com/xdr-labs/parser-studio-docs/main/practice/05-relay-forwarded.log) — **copy and paste into Add Logs**.
-- [Independent FortiGate Web Filter original, 1 line](https://raw.githubusercontent.com/xdr-labs/parser-studio-docs/main/practice/05-relay-holdout-original.log) — separate published vendor event.
-- [Actual rsyslog forwarded Web Filter holdout, 1 line](https://raw.githubusercontent.com/xdr-labs/parser-studio-docs/main/practice/05-relay-holdout.log) — **copy and test separately**.
-- [Actual rsyslog capture evidence](https://raw.githubusercontent.com/xdr-labs/parser-studio-docs/main/practice/05-rsyslog-capture-evidence.json), including original/captured SHA-256 values.
-- [Optional reproducible rsyslog capture script](https://raw.githubusercontent.com/xdr-labs/parser-studio-docs/main/practice/capture_with_rsyslog.py) (isolated Linux lab; requires rsyslogd and appropriate permissions).
+- [Original published FortiGate Traffic log, 2 lines](https://raw.githubusercontent.com/isoc-labs/parser-studio-docs/main/practice/05-relay-original.log) — **before** relay forwarding.
+- [Actual rsyslog forwarded capture, 2 lines](https://raw.githubusercontent.com/isoc-labs/parser-studio-docs/main/practice/05-relay-forwarded.log) — **copy and paste into Add Logs**.
+- [Independent FortiGate Web Filter original, 1 line](https://raw.githubusercontent.com/isoc-labs/parser-studio-docs/main/practice/05-relay-holdout-original.log) — separate published vendor event.
+- [Actual rsyslog forwarded Web Filter holdout, 1 line](https://raw.githubusercontent.com/isoc-labs/parser-studio-docs/main/practice/05-relay-holdout.log) — **copy and test separately**.
+- [Actual rsyslog capture evidence](https://raw.githubusercontent.com/isoc-labs/parser-studio-docs/main/practice/05-rsyslog-capture-evidence.json), including original/captured SHA-256 values.
+- [Optional reproducible rsyslog capture script](https://raw.githubusercontent.com/isoc-labs/parser-studio-docs/main/practice/capture_with_rsyslog.py) (isolated Linux lab; requires rsyslogd and appropriate permissions).
 
 ## 1. Original vendor events — comparison only
 
@@ -67,7 +67,7 @@ The separately observed result was **1 of 1 relay headers recognized and 1 of 1 
 
 The lab used `rsyslogd 8.2312.0`, independently launched with `imudp` input and `omfwd` UDP output, on loopback-only ephemeral ports. Its custom output template added `<134>`, `relay01`, `forwarder:` and a timestamp while writing `%rawmsg%` to preserve the original vendor payload. **3/3 payloads were byte-identical to the official source lines**. We did not use a Python function to fabricate the Syslog headers.
 
-If you want to reproduce the UDP path on a disposable, authorized Ubuntu lab, download the vendor input files and [capture script](https://raw.githubusercontent.com/xdr-labs/parser-studio-docs/main/practice/capture_with_rsyslog.py), and run it there with the required permissions. The script creates a standalone process without restarting the system rsyslog service. It is **not** a production deployment runbook.
+If you want to reproduce the UDP path on a disposable, authorized Ubuntu lab, download the vendor input files and [capture script](https://raw.githubusercontent.com/isoc-labs/parser-studio-docs/main/practice/capture_with_rsyslog.py), and run it there with the required permissions. The script creates a standalone process without restarting the system rsyslog service. It is **not** a production deployment runbook.
 
 ## Expected review outcome
 
