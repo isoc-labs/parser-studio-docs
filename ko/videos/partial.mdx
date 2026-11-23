@@ -1,0 +1,84 @@
+---
+title: "복잡한 Sophos Firewall 로그의 부분 파싱 영역 분석"
+sidebarTitle: "02 · 부분 파싱"
+description: "실제 Sophos XG 원본에서 여러 필드가 이미 추출되었지만, 미파싱 영역이 남아 있는 상황의 정확한 분석 방법입니다."
+---
+
+# 복잡한 Sophos Firewall 로그의 부분 파싱 영역 분석
+
+실제 Sophos XG 원본에서 여러 필드가 이미 추출되었지만, 미파싱 영역이 남아 있는 상황의 정확한 분석 방법입니다.
+
+영상 나레이션과 하단 캡션은 **영어**입니다. 여기에서는 실제 화면에서 눌러야 할 버튼과 기대 결과를 한국어로 설명합니다.
+
+<video controls playsInline preload="metadata" width="100%" poster="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/poster.png">
+  <source src="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/scenario-english.mp4" type="video/mp4" />
+  동영상이 보이지 않으면 아래 링크를 이용하세요.
+</video>
+
+[영상 크게 보기](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/watch.html) · [MP4 다운로드](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/scenario-english.mp4) · [영어 SRT 자막](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/subtitles-en.srt) · [나레이션 원고](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/narration-en.md)
+
+## 실습 원본 다운로드
+
+[모든 연습용 공개 로그 ZIP](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/practice/practice-all.zip) · [Parser Studio 실행](https://app.parser.xdr.ooo/)
+
+- [Sophos 방화벽 로그 2건](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/02-sophos-xg.log)
+
+이 파일에는 영상에서 사용한 원본 샘플이 들어 있습니다. 불완전한 이벤트를 삭제하거나 변경하면 영상과 같은 결과를 비교할 수 없습니다.
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-START */}
+
+### 영상과 동일한 로그 원본 직접 복사
+
+각 코드 블록의 **복사 아이콘**으로 모든 내용을 복사한 다음 Parser Studio에 붙여 넣으세요. 각 줄은 하나의 원본 이벤트이며 영상과 같은 결과를 재현하기 위해 수정하지 마세요.
+
+#### 복잡한 Sophos XG 방화벽 원본 2건 — Add Logs에 붙여 넣기
+
+**원본 크기:** 1821 bytes · **파일명:** `02-sophos-xg.log` · 영상과 같은 이벤트 줄 수를 유지합니다.
+
+```text
+device="SFW" date=2017-01-31 time=14:16:19 timezone="IST" device_name="CR750iNG-XP" device_id=C44313350024- P29PUA log_id=010101600001 log_type="Firewall" log_component="Firewall Rule" log_subtype="Allowed" status="Allow" priority=Information duration=30 fw_rule_id=2 policy_type=2 user_name="gaurav" user_gp="Open Group" iap=1 ips_policy_id=0 appfilter_policy_id=1 application="Youtube Video Streaming" application_risk=3 application_technology="Browser Based" application_category="Streaming Media" in_interface="PortA" out_interface="PortB" src_mac=00:00:00:00:00:00 src_ip=10.198.47.71 src_country_code=R1 dst_ip=81.2.69.143 dst_country_code=USA protocol="UDP" src_port=59859 dst_port=53 sent_pkts=1 recv_pkts=1 sent_bytes=77 recv_bytes=105 tran_src_ip=81.2.69.144 tran_src_port=0 tran_dst_ip= tran_dst_port=0 srczonetype="LAN" srczone="LAN" dstzonetype="WAN" dstzone="WAN" dir_disp="" connevent="Stop" connid="185246656" vconnid="" hb_health="No Heartbeat"
+device="SFW" date=2018-05-30 time=13:14:26 timezone="IST" device_name="XG125w" device_id=SFDemo-763180a log_id=010102600002 log_type="Firewall" log_component="Firewall Rule" log_subtype="Denied" status="Deny" priority=Information duration=0 fw_rule_id=1 policy_type=1 user_name="" user_gp="" iap=2 ips_policy_id=0 appfilter_policy_id=0 application="" application_risk=0 application_technology="" application_category="" in_interface="Port1" out_interface="Port2.531" src_mac=b8:97:5a:5b:0f:fd src_ip=10.198.32.19 src_country_code= dst_ip=1.128.3.4 dst_country_code= protocol="ICMP" icmp_type=8 icmp_code=0 sent_pkts=0 recv_pkts=0 sent_bytes=0 recv_bytes=0 tran_src_ip= tran_src_port=0 tran_dst_ip= tran_dst_port=0 srczonetype="" srczone="" dstzonetype="" dstzone="" dir_disp="" connid="" vconnid="" hb_health="No Heartbeat" message="" appresolvedby="Signature
+```
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-END */}
+
+## 2026년 10월 31일 화면에서 따라 하기
+
+1. **Auto Parser**에서 제조사 `Sophos`, 제품 `XG Firewall`을 입력합니다.
+2. 실제 공개 샘플 두 건을 **Add Logs**에 그대로 붙여 넣은 뒤 **Analyze Logs**를 실행합니다.
+3. **0 of 2 log events parsed completely**는 모든 필드 추출이 실패했다는 뜻이 아니라 전체 이벤트 검증에 미해석 부분이 남았다는 뜻입니다.
+4. 분석 결과의 **Problem to review**, **Values already found**, **Text not yet assigned to fields**를 확인합니다. 이전의 **Tools & Diagnostics** 메뉴는 존재하지 않습니다.
+5. 일부 필드가 추출됐더라도 잔여 텍스트를 삭제하지 말고 추가 검증으로 해결합니다.
+
+## 예상 결과
+
+0/2 완전 파싱 상태이지만 이미 추출된 필드는 유지됩니다. 이 영상은 진단 및 규칙 검토 과정을 보여줄 뿐 미검증 복구 성공을 주장하지 않습니다.
+
+## 영상 구간 (2026년 10월 31일 신규 녹화)
+
+| 시간 | 실제 화면 단계 |
+|---|---|
+| 00:01 | Partial Parsing |
+| 00:07 | Identify Source |
+| 00:12 | Paste Both Events |
+| 00:18 | Run Analysis |
+| 00:22 | Read The Result |
+| 00:27 | Inspect Unparsed Text |
+| 00:33 | Preserve Evidence |
+| 00:40 | Review Required |
+
+*실제 재녹화 영상에서 측정한 구간입니다. 이전 영상의 메뉴는 포함하지 않습니다.*
+
+## 복구 방법
+
+원본의 오류가 해결되지 않았다면 검증 중단 상태를 유지하세요. 이미 파싱된 필드를 없애고 로그 전체를 새로 처리할 필요는 없습니다.
+
+## 원본 출처
+
+- [Elastic integrations의 Sophos XG 원본 로그](https://github.com/elastic/integrations/tree/ee918d03f4a90dacd32673546c64a633308796ef/packages/sophos/data_stream/xg/_dev/test/pipeline)
+
+<Warning>
+샘플 파싱이나 파서 파일 생성은 실제 Stellar Cyber 환경에 설치하거나 수신을 확인한 결과가 아닙니다. 원본 고객 로그를 ChatGPT로 수동 복사할 때에는 민감 정보를 검토하고 마스킹하세요.
+</Warning>
+
+[한국어 영상 목록](/ko/videos/index) · [영문 안내](/videos/partial)

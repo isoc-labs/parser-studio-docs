@@ -1,0 +1,160 @@
+---
+title: "Parser Studio does not understand my log"
+sidebarTitle: "Log Not Understood"
+description: "Start in Auto Parser, inspect the warning, then follow the full ChatGPT Assisted menu."
+---
+
+# Parser Studio cannot understand this log. What do I do?
+
+**Watch:** [English tutorial using published real log samples](/videos/unknown).
+
+**Situation:** You pasted logs, clicked **Analyze Logs**, and the result says **0 of N log events parsed completely**, or the entire text is marked as needing review. You do not need to identify a log format before starting the recovery workflow.
+
+## Published Snort 3 practice events
+
+**Manufacturer:** Snort · **Product:** Snort 3. Start by pasting **only the original one-line alert** into Add Logs. The additional two records below are for the independent holdout check after proposing a repair. This is the exact sample from the demonstration, not a fictional pipe-delimited message.
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-START */}
+
+### Copy the exact logs used in the video
+
+Use the **copy icon** on each code block, then paste the entire content into Parser Studio. Each line is one unmodified event from the published source. Do not omit difficult events or replace values to force a passing result.
+
+[Full video, exact files and chapter timestamps](/videos/unknown).
+
+#### Original Snort 3 alert_fast event — paste this one line into Add Logs
+
+**Exact source:** 225 bytes · **File:** `03-snort-alert.log` · Keep both lines when the file has two events.
+
+```text
+07/16-09:23:39.153899 [**] [1:1000000:0] "SERVER-WEBAPP Apache Log4j arbitrary code execution attempt" [**] [Classification: Attempted User Privilege Gain] [Priority: 1] [AppID: HTTP] {TCP} 192.168.1.2:50284 -> 192.168.2.3:80
+```
+
+#### Two independent Snort alerts — paste these ONLY into Additional test logs
+
+**Exact source:** 342 bytes · **File:** `03-snort-holdout.log` · Keep both lines when the file has two events.
+
+```text
+07/16-09:23:39.153899 [would_drop] [**] [1:1000000:0] "SERVER-WEBAPP Apache Log4j arbitrary code execution attempt" [**] [Classification: Attempted User Privilege Gain] [Priority: 1] {TCP} 192.168.1.2:50284 -> 192.168.2.3:80
+06/25-00:23:53.106340 [**] [1:1000001:1] "LOCAL UDP test" [**] [Priority: 0] {UDP} 127.0.0.1:34392 -> 127.0.0.1:31337
+```
+
+#### Optional: the reviewed demonstration ParserRecipe JSON
+
+This JSON is an **educational proposal, not an automatically trusted AI answer**. Analyze the one original event first, test this proposal with two independent alerts, and approve the tested change explicitly.
+
+Download the same reviewed JSON: [03-snort-reviewed-recipe.json](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/03-snort-reviewed-recipe.json).
+
+```json
+{
+  "contract": "parser-studio.recipe.v0.2",
+  "schemaRevision": "0.2",
+  "compilerMode": "REVIEW_ONLY",
+  "projectId": "draft-snort_snort_3",
+  "sourceFormat": "regex",
+  "bodyFormat": "regex",
+  "sample": {
+    "sha256": "a3e78f6e4660338664eae29c4be53f5714eebfb2f0d38f84ba1aad0224226cc4",
+    "events": 1
+  },
+  "stages": [
+    {
+      "op": "split_event",
+      "boundary": "single-line"
+    },
+    {
+      "op": "parse_regex",
+      "pattern": "^(?<raw_event>.*?(?:\\[Classification: (?<classification>[^\\]]+)\\] )?\\[Priority: (?<priority>\\d+)\\](?: \\[AppID: (?<appid>[^\\]]+)\\])? \\{(?<protocol>\\w+)\\} (?<srcendpoint>[\\d.]+:\\d+) -> (?<dstendpoint>[\\d.]+:\\d+))$"
+    },
+    {
+      "op": "map_field",
+      "source": "raw_event",
+      "target": "raw_event",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "classification",
+      "target": "classification",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "priority",
+      "target": "priority",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "appid",
+      "target": "appid",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "protocol",
+      "target": "protocol",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "srcendpoint",
+      "target": "srcendpoint",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "dstendpoint",
+      "target": "dstendpoint",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "classify",
+      "defaultIndex": "syslog",
+      "rules": []
+    },
+    {
+      "op": "fallback_unparsed",
+      "mode": "retain_unparsed"
+    }
+  ],
+  "nativeVerified": false,
+  "targetVerified": false
+}
+```
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-END */}
+
+## Walkthrough
+
+1. Stay under **Auto Parser → Add Logs**. Confirm you pasted complete source records, then click **Analyze Logs**.
+2. Read the result. If it needs attention, use **Problem to review** to select an event.
+3. Check **Original event**, **What needs attention**, and **Recommended fix**.
+4. If a supported on-screen fix such as **Use extracted fields** is offered, review it first. If no safe local repair is available, click **Fix with ChatGPT** or select **ChatGPT Assisted Parser** on the left.
+5. In **Original local logs**, keep the source for local checking. Describe the fields you need in **What do you want Parser Studio to find?**.
+6. Review and mask **Original local logs** before preparing the prompt. The original text is included verbatim; there is no separate redacted-example editor.
+7. Click **Prepare ChatGPT Prompt** → **Copy Prompt**, then paste that prompt into ChatGPT yourself.
+8. Ask for **supported ParserRecipe v0.2 JSON**, return the response to **3. Paste the ChatGPT result**, then click **Check ChatGPT Result**.
+9. If Parser Studio requests additional test logs, provide different examples, check the comparison and approve only a passing supported change.
+10. Return to Auto Parser and re-review all records before mapping and generation.
+
+![Current ChatGPT Assisted Parser with original logs, sharing warning and prompt preparation](/images/current-08-chatgpt-assisted.png)
+
+*Use this menu when automatic analysis cannot safely understand the source. Nothing is automatically sent to ChatGPT.*
+
+## Expected review outcome
+
+You either obtain a supported, independently reviewed proposal or retain a clear unsupported status. Neither result silently discards the original logs.
+
+## Recovery path
+
+If the ChatGPT response contains arbitrary executable code, invalid schema or an unsupported transformation, request a narrower supported structured proposal. If no supported solution is available, preserve the samples and do not claim a parser was created.
+
+**Next:** [Full ChatGPT Assisted walkthrough](/workflows/chatgpt-assisted).

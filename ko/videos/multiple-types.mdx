@@ -1,0 +1,98 @@
+---
+title: "FortiGate Traffic·Web Filter·IPS 로그를 하나의 파서로 검토하기"
+sidebarTitle: "04 · 다중 이벤트 유형"
+description: "Fortinet 공식 문서의 서로 다른 로그 유형 네 건을 하나의 Parser Studio 프로젝트에서 분석한 실제 영상입니다."
+---
+
+# FortiGate Traffic·Web Filter·IPS 로그를 하나의 파서로 검토하기
+
+Fortinet 공식 문서의 서로 다른 로그 유형 네 건을 하나의 Parser Studio 프로젝트에서 분석한 실제 영상입니다.
+
+영상 나레이션과 하단 캡션은 **영어**입니다. 여기에서는 실제 화면에서 눌러야 할 버튼과 기대 결과를 한국어로 설명합니다.
+
+<video controls playsInline preload="metadata" width="100%" poster="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/04-fortinet-multi-type-real/poster.png">
+  <source src="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/04-fortinet-multi-type-real/scenario-english.mp4" type="video/mp4" />
+  동영상이 보이지 않으면 아래 링크를 이용하세요.
+</video>
+
+[영상 크게 보기](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/04-fortinet-multi-type-real/watch.html) · [MP4 다운로드](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/04-fortinet-multi-type-real/scenario-english.mp4) · [영어 SRT 자막](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/04-fortinet-multi-type-real/subtitles-en.srt) · [나레이션 원고](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/04-fortinet-multi-type-real/narration-en.md)
+
+## 실습 원본 다운로드
+
+[모든 연습용 공개 로그 ZIP](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/practice/practice-all.zip) · [Parser Studio 실행](https://app.parser.xdr.ooo/)
+
+- [FortiGate Traffic 원본 2건](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/04-fortigate-traffic.log)
+- [FortiGate Web Filter / IPS 원본 2건](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/04-fortigate-threat.log)
+
+이 파일에는 영상에서 사용한 원본 샘플이 들어 있습니다. 불완전한 이벤트를 삭제하거나 변경하면 영상과 같은 결과를 비교할 수 없습니다.
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-START */}
+
+### 영상과 동일한 로그 원본 직접 복사
+
+각 코드 블록의 **복사 아이콘**으로 모든 내용을 복사한 다음 Parser Studio에 붙여 넣으세요. 각 줄은 하나의 원본 이벤트이며 영상과 같은 결과를 재현하기 위해 수정하지 마세요.
+
+#### Traffic 그룹 — FortiGate Traffic 로그 2건
+
+**원본 크기:** 1745 bytes · **파일명:** `04-fortigate-traffic.log` · 영상과 같은 이벤트 줄 수를 유지합니다.
+
+```text
+date=2019-05-13 time=16:29:50 logid="0000000013" type="traffic" subtype="forward" level="notice" vd="vdom1" eventtime=1557790190452146185 srcip=10.1.100.11 srcport=44258 srcintf="port12" srcintfrole="undefined" dstip=185.244.31.158 dstport=80 dstintf="port11" dstintfrole="undefined" srcuuid="ae28f494-5735-51e9-f247-d1d2ce663f4b" dstuuid="ae28f494-5735-51e9-f247-d1d2ce663f4b" poluuid="ccb269e0-5735-51e9-a218-a397dd08b7eb" sessionid=381780 proto=6 action="close" policyid=1 policytype="policy" service="HTTP" dstcountry="Germany" srccountry="Reserved" trandisp="snat" transip=172.16.200.2 transport=44258 duration=5 sentbyte=736 rcvdbyte=3138 sentpkt=14 rcvdpkt=5 appcat="unscanned" utmaction="block" countweb=1 crscore=30 craction=4194304 osname="Ubuntu" mastersrcmac="a2:e9:00:ec:40:01" srcmac="a2:e9:00:ec:40:01" srcserver=0 utmref=65497-796
+date=2019-05-10 time=11:37:47 logid="0000000013" type="traffic" subtype="forward" level="notice" vd="vdom1" eventtime=1557513467369913239 srcip=10.1.100.11 srcport=58012 srcintf="port12" srcintfrole="undefined" dstip=23.59.154.35 dstport=80 dstintf="port11" dstintfrole="undefined" srcuuid="ae28f494-5735-51e9-f247-d1d2ce663f4b" dstuuid="ae28f494-5735-51e9-f247-d1d2ce663f4b" poluuid="ccb269e0-5735-51e9-a218-a397dd08b7eb" sessionid=105048 proto=6 action="close" policyid=1 policytype="policy" service="HTTP" dstcountry="Canada" srccountry="Reserved" trandisp="snat" transip=172.16.200.2 transport=58012 appid=34050 app="HTTP.BROWSER_Firefox" appcat="Web.Client" apprisk="elevated" applist="g-default" duration=116 sentbyte=1188 rcvdbyte=1224 sentpkt=17 rcvdpkt=16 utmaction="allow" countapp=1 osname="Ubuntu" mastersrcmac="a2:e9:00:ec:40:01" srcmac="a2:e9:00:ec:40:01" srcserver=0 utmref=65500-742
+```
+
+#### Threat 그룹 — FortiGate Web Filter 및 IPS 로그
+
+**원본 크기:** 1373 bytes · **파일명:** `04-fortigate-threat.log` · 영상과 같은 이벤트 줄 수를 유지합니다.
+
+```text
+date=2019-05-13 time=16:29:45 logid="0316013056" type="utm" subtype="webfilter" eventtype="ftgd_blk" level="warning" vd="vdom1" eventtime=1557790184975119738 policyid=1 sessionid=381780 srcip=10.1.100.11 srcport=44258 srcintf="port12" srcintfrole="undefined" dstip=185.244.31.158 dstport=80 dstintf="port11" dstintfrole="undefined" proto=6 service="HTTP" hostname="morrishittu.ddns.net" profile="test-webfilter" action="blocked" reqtype="direct" url="/" sentbyte=84 rcvdbyte=0 direction="outgoing" msg="URL belongs to a denied category in policy" method="domain" cat=26 catdesc="Malicious Websites" crscore=30 craction=4194304 crlevel="high"
+date=2019-05-15 time=17:56:41 logid="0419016384" type="utm" subtype="ips" eventtype="signature" level="alert" vd="root" eventtime=1557968201 severity="critical" srcip=10.1.100.22 srccountry="Reserved" dstip=172.16.200.55 srcintf="port10" srcintfrole="lan" dstintf="port9" dstintfrole="wan" sessionid=4017 action="dropped" proto=6 service="HTTP" policyid=1 attack="Adobe.Flash.newfunction.Handling.Code.Execution" srcport=46810 dstport=80 hostname="172.16.200.55" url="/ips/sig1.pdf" direction="incoming" attackid=23305 profile="block-critical-ips" ref="http://www.fortinet.com/ids/VID23305" incidentserialno=582633933 msg="applications3: Adobe.Flash.newfunction.Handling.Code.Execution," crscore=50 craction=4096 crlevel="critical"
+```
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-END */}
+
+## 2026년 10월 31일 화면에서 따라 하기
+
+1. **Auto Parser**에서 제조사 `Fortinet`, 제품 `FortiGate`를 입력합니다.
+2. **Add Another Log Type**을 사용해 `Traffic` / `Threat` 그룹을 만들고 각 그룹에 실제 공개 샘플 두 건씩 입력합니다.
+3. **Analyze Logs** 결과에서 **4 of 4 log events parsed completely**를 확인합니다.
+4. **Review Fields**에서 Traffic·Web Filter·IPS 이벤트의 원본 필드를 확인하고 **Map Fields**에서 Stellar Cyber 7.0 매핑을 점검합니다.
+5. **Create Parser**에서 최종 테스트가 허용되는 경우에만 실행하고 결과를 검증한 다음 다운로드합니다. 실제 수신·배포 결과와 혼동하지 않습니다.
+
+## 예상 결과
+
+원본 네 건이 완전 파싱되어 통합 프로젝트에서 파일 생성이 통과합니다. 문서상의 Traffic 및 Web Filter 예시는 동일한 session ID 381780을 공유합니다.
+
+## 영상 구간 (2026년 10월 31일 신규 녹화)
+
+| 시간 | 실제 화면 단계 |
+|---|---|
+| 00:01 | Multiple Log Types |
+| 00:07 | Identify Fortigate |
+| 00:11 | Add Another Log Type |
+| 00:17 | Set Names And Logs |
+| 00:23 | Analyze All Types |
+| 00:28 | Verify Coverage |
+| 00:34 | Review Data |
+| 00:38 | Normalize Mappings |
+| 00:45 | Create Combined Draft |
+| 00:50 | Final Test |
+| 00:55 | Download Package |
+| 01:00 | Verify Each Type |
+
+*실제 재녹화 영상에서 측정한 구간입니다. 이전 영상의 메뉴는 포함하지 않습니다.*
+
+## 복구 방법
+
+실제 장비에 새로운 이벤트 유형이 있다면 대표 로그를 추가로 검사하세요. 네 건 통과만으로 전체 펌웨어 또는 실장비 수신 호환성이 증명되지는 않습니다.
+
+## 원본 출처
+
+- [Fortinet 공식 Sample logs by log type](https://docs.fortinet.com/document/fortigate/6.2.0/cookbook/986892/sample-logs-by-log-type)
+
+<Warning>
+샘플 파싱이나 파서 파일 생성은 실제 Stellar Cyber 환경에 설치하거나 수신을 확인한 결과가 아닙니다. 원본 고객 로그를 ChatGPT로 수동 복사할 때에는 민감 정보를 검토하고 마스킹하세요.
+</Warning>
+
+[한국어 영상 목록](/ko/videos/index) · [영문 안내](/videos/multiple-types)

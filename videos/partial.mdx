@@ -1,0 +1,86 @@
+---
+title: "Partial Parsing: Complex Sophos XG Firewall Logs"
+sidebarTitle: "02 \u00b7 Partial Parsing"
+description: "Identify real unparsed regions without discarding already extracted Sophos Firewall fields."
+---
+
+# Partial Parsing: Complex Sophos XG Firewall Logs
+
+English narration and permanently visible English captions accompany this recording of the October 31, 2026 Parser Studio Web UI. The examples come from published original manufacturer documentation or upstream-authored test fixtures, not from fabricated demo messages.
+
+<video controls playsInline preload="metadata" width="100%" poster="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/poster.png">
+  <source src="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/scenario-english.mp4" type="video/mp4" />
+  Your browser does not support native video playback.
+</video>
+
+[Watch in a dedicated video player](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/watch.html) · [Download MP4](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/scenario-english.mp4) · [English SRT captions](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/subtitles-en.srt) · [Read the English transcript](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/02-sophos-xg-partial-recovery/narration-en.md)
+
+## Practice along with the video
+
+Keep this page open to pause or replay the demonstration while working in a second tab.
+
+**Before you begin:** [Download all practice samples as a ZIP](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/practice/practice-all.zip) · [Open Parser Studio](https://app.parser.xdr.ooo/)
+
+- [Download the complex original Sophos Firewall logs](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/02-sophos-xg.log)
+
+**Use the source files above exactly as shown in the video.** Each file contains the public documented sample events used during the recording, with source attribution and SHA-256 checksums in the ZIP bundle.
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-START */}
+
+### Copy the exact logs used in the video
+
+Use the **copy icon** on each code block, then paste the entire content into Parser Studio. Each line is one unmodified event from the published source. Do not omit difficult events or replace values to force a passing result.
+
+#### Copy both complex Sophos XG Firewall events into Add Logs
+
+**Exact source:** 1821 bytes · **File:** `02-sophos-xg.log` · Keep both lines when the file has two events.
+
+```text
+device="SFW" date=2017-01-31 time=14:16:19 timezone="IST" device_name="CR750iNG-XP" device_id=C44313350024- P29PUA log_id=010101600001 log_type="Firewall" log_component="Firewall Rule" log_subtype="Allowed" status="Allow" priority=Information duration=30 fw_rule_id=2 policy_type=2 user_name="gaurav" user_gp="Open Group" iap=1 ips_policy_id=0 appfilter_policy_id=1 application="Youtube Video Streaming" application_risk=3 application_technology="Browser Based" application_category="Streaming Media" in_interface="PortA" out_interface="PortB" src_mac=00:00:00:00:00:00 src_ip=10.198.47.71 src_country_code=R1 dst_ip=81.2.69.143 dst_country_code=USA protocol="UDP" src_port=59859 dst_port=53 sent_pkts=1 recv_pkts=1 sent_bytes=77 recv_bytes=105 tran_src_ip=81.2.69.144 tran_src_port=0 tran_dst_ip= tran_dst_port=0 srczonetype="LAN" srczone="LAN" dstzonetype="WAN" dstzone="WAN" dir_disp="" connevent="Stop" connid="185246656" vconnid="" hb_health="No Heartbeat"
+device="SFW" date=2018-05-30 time=13:14:26 timezone="IST" device_name="XG125w" device_id=SFDemo-763180a log_id=010102600002 log_type="Firewall" log_component="Firewall Rule" log_subtype="Denied" status="Deny" priority=Information duration=0 fw_rule_id=1 policy_type=1 user_name="" user_gp="" iap=2 ips_policy_id=0 appfilter_policy_id=0 application="" application_risk=0 application_technology="" application_category="" in_interface="Port1" out_interface="Port2.531" src_mac=b8:97:5a:5b:0f:fd src_ip=10.198.32.19 src_country_code= dst_ip=1.128.3.4 dst_country_code= protocol="ICMP" icmp_type=8 icmp_code=0 sent_pkts=0 recv_pkts=0 sent_bytes=0 recv_bytes=0 tran_src_ip= tran_src_port=0 tran_dst_ip= tran_dst_port=0 srczonetype="" srczone="" dstzonetype="" dstzone="" dir_disp="" connid="" vconnid="" hb_health="No Heartbeat" message="" appresolvedby="Signature
+```
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-END */}
+
+### Follow the current on-screen steps
+
+1. In **Auto Parser**, set manufacturer to **Sophos** and product to **XG Firewall**.
+2. Paste both original Sophos sample records without trimming quoted or empty values; click **Analyze Logs**.
+3. Verify **0 of 2 log events parsed completely** for this deliberately difficult public fixture. This is *partial extraction*, not zero extracted fields.
+4. In the normal analysis result, inspect **Problem to review**, **Values already found** and **Text not yet assigned to fields**. The old **Tools & Diagnostics** menu is not part of the current workflow.
+5. Do not remove unresolved source text to obtain a false success state. Continue only after a new rule passes independent tests.
+
+### Video chapter timestamps (October 31 recording)
+
+| Time | Actual recorded step |
+|---|---|
+| 00:01 | Partial Parsing |
+| 00:07 | Identify Source |
+| 00:12 | Paste Both Events |
+| 00:18 | Run Analysis |
+| 00:22 | Read The Result |
+| 00:27 | Inspect Unparsed Text |
+| 00:33 | Preserve Evidence |
+| 00:40 | Review Required |
+
+*The listed times come from the actual October 31 recording, not the retired version.*
+
+## Expected review outcome
+
+The original long Sophos Firewall examples retain dozens of recognized source values, but neither sample is fully parsed. The video demonstrates diagnosis and the additional-rule workflow without claiming an unverified repair succeeded.
+
+Do not treat successful source extraction or generated files as evidence of full vendor/firmware coverage, target import acceptance, or live Stellar Cyber deployment compatibility.
+
+## Recovery path
+
+For a different log shape, keep the original records and examine the highlighted source spans, following the [related workflow](/scenarios/partial-event). Only apply additional parsing rules after different examples pass a separate regression test. Never delete failing events merely to obtain a passing total.
+
+## Original log provenance
+
+- [Elastic integrations: Sophos XG Firewall test fixtures](https://github.com/elastic/integrations/tree/ee918d03f4a90dacd32673546c64a633308796ef/packages/sophos/data_stream/xg/_dev/test/pipeline)
+
+<Note>
+Customer logs may include private information. Review, sanitize and manually approve any excerpt before copying it into an external ChatGPT conversation. The Auto Parser does not automatically share those logs.
+</Note>
+
+[All video tutorials](/videos/index) · [Launch Parser Studio](https://app.parser.xdr.ooo/)

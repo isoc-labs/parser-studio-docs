@@ -1,0 +1,86 @@
+---
+title: "Quickstart | Paste logs and create a parser"
+sidebarTitle: "My First Parser"
+description: "A click-by-click walkthrough for somebody who has never used a log parser."
+---
+
+# Your first parser in five steps
+
+**You have copied logs from a product. You do not know the log format. That is enough to start.**
+
+**Goal:** Analyze two fictional events, review the extracted values, check their field names, and reach the parser file download step.
+
+## Step 1 — Open Auto Parser
+
+Open Parser Studio and choose **Auto Parser** in the left menu. You should see these four stages at the top: **Add Logs**, **Review Fields**, **Map Fields**, and **Create Parser**.
+
+![Default Auto Parser screen with four guided stages and an empty log input](/images/current-01-auto-parser-start.png)
+
+*Start in Auto Parser. The first four stages are Add Logs, Review Fields, Map Fields and Create Parser. No separate diagnostics menu is needed.*
+
+Enter **Manufacturer** and **Product** before generating. **Version** is optional if known. The generated CONF listener uses **Parser listener port (.conf)**, which defaults to **6801**. No live system is configured by merely downloading parser files.
+
+## Step 2 — Paste the logs and analyze
+
+Paste these two fictional events into the large box under **Add Logs**:
+
+```json
+{"timestamp":"2026-10-18T09:00:00Z","action":"allow","src_ip":"192.0.2.10","dst_ip":"198.51.100.20","dst_port":443,"user":"demo-user"}
+{"timestamp":"2026-10-18T09:00:01Z","action":"deny","src_ip":"192.0.2.11","dst_ip":"203.0.113.5","dst_port":22,"user":"demo-admin"}
+```
+
+Click the orange **Analyze Logs** button. **Do not select JSON, CEF, LEEF, or a regular expression.** Parser Studio will inspect the records.
+
+If the corrected build shows **2 of 2 log events structurally parsed**, click **Review Fields**. This confirms source structure only, not the final field mappings or native runtime. If the count is incomplete, follow [what to do with a warning](/scenarios/unknown-log) first.
+
+![Two log events completely parsed after clicking Analyze Logs](/images/current-02-completely-parsed.png)
+
+*Notice the green result and the orange Review Fields button below it.*
+
+## Step 3 — Check the values, then click Map Fields
+
+In **Review Fields**, use **Choose a source event** to examine both events.
+
+Check the three areas: **Original log**, **Fields Parser Studio found**, and **Current output preview**. For example, the source address `192.0.2.10` should remain the source address in the parsed result.
+
+If the extraction is correct, click **Map Fields** at the bottom. You do not need to repair a passing event.
+
+![Review Fields screen showing original log, extracted values and output preview](/images/current-03-review-fields.png)
+
+*Compare original text with the extracted value, not only the status badge.*
+
+## Step 4 — Review suggested field names
+
+On **Map Fields**, confirm that the address, action, port, and timestamp go to the intended output names. Most of the example fields are already matched.
+
+Check **Must fix before continuing**. If it shows **0** and the sample values make sense, click **Create Parser**.
+
+![Map Fields screen with candidate normalized fields, examples and mapping checks](/images/current-04-stellar7-mapping.png)
+
+*The mapping review is where you verify field meanings. You do not need to edit a correct suggestion.*
+
+## Step 5 — Run the final test and download
+
+On the **Create Parser** screen:
+
+1. Confirm that **Need fixing** is **0**.
+2. Choose **Run Final Test & Create Files**.
+3. When the file generator completes its checks, download **Download parser logic** and **Download listener configuration** individually, or **Download Parser Package** for the ZIP.
+4. Keep the files together with the sample and your reviewed mappings.
+
+![Final Create Parser screen with Run Final Test and Create Files button](/images/current-06-parser-download.png)
+
+*This current screen capture shows the file-creation success and download options for the demonstrated sample. It does not show an installation.*
+
+If the final test is blocked, **do not skip the warning**. Return to Review Fields or Map Fields and correct the reason shown on screen. If the file-generation service is unavailable, the analysis result is still useful, but no files have been generated.
+
+## Additional tools
+
+Use [Local Versions](/workflows/local-versions) to save/compare mapping experiments. See [Parser setup](/workflows/parser-setup) for port 6801 and explicit forwarding marks. Use [the real-log video library](/videos/index) for practical downloadable examples.
+
+## Which guide comes next?
+
+<CardGroup cols={2}>
+  <Card title="A problem appeared" icon="wrench" href="/scenarios/unknown-log">Find the incorrect event and use the suggested next action.</Card>
+  <Card title="My product produces different messages" icon="layer-group" href="/scenarios/mixed-events">Learn how to review several event shapes without losing a log.</Card>
+</CardGroup>

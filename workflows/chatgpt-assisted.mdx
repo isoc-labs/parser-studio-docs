@@ -1,0 +1,50 @@
+---
+title: "ChatGPT Assisted Parser | When logs are unfamiliar"
+sidebarTitle: "Use ChatGPT"
+description: "Use the current two-path UI to review a source-bearing prompt, test a constrained recipe, and approve a draft."
+---
+
+# ChatGPT Assisted Parser: what do I click?
+
+Use this when **Auto Parser** flags an unsupported part of a log or cannot establish a safe parser. This is a **manual copy-and-paste** workflow; Parser Studio does not automatically contact ChatGPT.
+
+![Current ChatGPT Assisted Parser screen with original source, sensitive-data warning and prompt preparation](/images/current-08-chatgpt-assisted.png)
+
+## 1. Enter your original logs
+
+1. Select **ChatGPT Assisted Parser** in the left menu or **Fix with ChatGPT** from a flagged Auto Parser event.
+2. Under **Original local logs**, inspect the source records. The same input is used for review and is included **verbatim** when a prompt is prepared.
+3. In **What do you want Parser Studio to find?**, describe the fields you need in plain language.
+4. Optionally supply **Log-generating solution** details (vendor, product, version and delivery type). These are hints, not a verified manufacturer grammar.
+5. Read the warning about sensitive information. **There is no separate redacted-example editor or masking approval step.** If the source contains confidential data, replace or remove it in the original input before you prepare and share any prompt; doing so changes the source to be tested.
+
+## 2. Prepare and manually share the prompt
+
+1. Click **Prepare ChatGPT Prompt**.
+2. Read the **entire** prepared prompt, including the block marked **BEGIN ORIGINAL LOG SOURCE**. It contains the entered source, not a fictional substitute.
+3. Use **Copy Prompt**, open ChatGPT yourself and paste the reviewed prompt.
+4. Request only the supported **ParserRecipe v0.2 JSON** response. If the source cannot be represented safely, a **REVIEW_REQUIRED** diagnostic is preferable to invented syntax.
+
+No original source text is automatically submitted to an external model. Manual copying is the decision to disclose the visible content.
+
+## 3. Check ChatGPT's response
+
+1. Paste the response into **ChatGPT result JSON**.
+2. Click **Check ChatGPT Result**.
+3. If it is rejected because of unsafe operations, wrong sample SHA, unknown fields or unsupported format, keep the original logs and revise the proposal. Do not bypass the review.
+
+## 4. Validate against different logs
+
+For a supported changed rule, add **Additional ChatGPT test logs** that differ from the training samples. Check **Confirm test examples are different**, then click **Test Proposed Fix**. Review both the original-source and holdout results. A positive example alone does not establish validity: **impossible dates, invalid ports and malformed event boundaries should be negative test cases when relevant.**
+
+Only explicitly approve a supported proposal that passes the necessary checks. If tests fail, keep the existing parser unchanged.
+
+## 5. Generate reviewed parser files
+
+Use **Apply Fix & Create Parser Files** only after the review and approval gates pass. Keep the generated Ruby parser logic and CONF together. They are **reviewed DRAFT artifacts**, not proof of an installed or working Stellar Cyber 7.0 parser.
+
+<Warning>
+  The ChatGPT prompt contains the **exact original source**. No separate masking editor exists. Review and remove sensitive values before manually sharing it. Auto Parser's **Analyze Logs** button separately sends the source to the same-origin Parser Studio server for Multi-Pass analysis, not to ChatGPT.
+</Warning>
+
+[Additional sample validation](/workflows/holdout-validation) · [Unknown-log walkthrough](/scenarios/unknown-log) · [Source privacy](/reference/source-privacy)

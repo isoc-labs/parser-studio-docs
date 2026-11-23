@@ -1,0 +1,69 @@
+---
+title: "Common beginner questions"
+sidebarTitle: "Frequently Asked Questions"
+description: "Short answers about paste, analyze, field mapping, ChatGPT, mixed logs and downloads."
+---
+
+# Frequently asked questions
+
+## I have a log but do not know whether it is CEF, LEEF or JSON. Where do I start?
+
+Select **Auto Parser**, paste several complete records under **Add Logs**, and press **Analyze Logs**. The application handles initial recognition. [Try the Quickstart](/quickstart).
+
+## Analyze Logs was successful. Do I need to do anything else?
+
+Yes. Click **Review Fields** to check actual values, then **Map Fields** to check destination names and types. Open **Create Parser** and use **Run Final Test & Create Files** before downloading anything.
+
+## One part is highlighted. Where do I click?
+
+Use **Problem to review**, inspect **Original event**, and read **Recommended fix**. Apply only a supported repair, or click **Fix with ChatGPT**. [Full partial-event example](/scenarios/partial-event).
+
+## It could not understand any part of my log. What now?
+
+Click **ChatGPT Assisted Parser** in the left menu. Check **Original local logs** first: the prepared prompt includes their exact text. Remove sensitive values in the source before clicking **Prepare ChatGPT Prompt**, manually copy the reviewed prompt, and paste a supported JSON response into the application for checking. [Follow the steps](/scenarios/unknown-log).
+
+## My firewall sends Traffic, Threat and other event types. Can I create one parser?
+
+Start by pasting representative examples of **all the types together**. If Parser Studio and the generator support the reviewed combination, one combined draft is possible. If the application identifies incompatible groups, review them separately rather than pretending they were merged. [Mixed log example](/scenarios/mixed-events).
+
+## My log has values but no column names. What should I do?
+
+If available, click **Keep all N values with temporary names**, or use **Names to give each value** with your product's actual log definition and confirm it. [Unnamed columns](/scenarios/unnamed-values).
+
+## It found the correct address, but the output field is wrong. Should I ask ChatGPT?
+
+Usually not. Use **Map Fields → Review field matches** to correct **Stellar field name** or **Value type**. [Mapping scenario](/scenarios/normalization).
+
+## Does ChatGPT see my original logs automatically?
+
+No. The assisted method uses explicit, manual copying. Always inspect and mask the text you choose to share. [Privacy instructions](/reference/source-privacy).
+
+## What should I ask ChatGPT to return?
+
+Follow the product prompt contract for **ParserRecipe v0.2 JSON**. The application checks it before using it. Arbitrary executable code is not a substitute.
+
+## Where is the final download?
+
+In **Create Parser**, after **Run Final Test & Create Files** succeeds. Generation and integrity checks must pass before verified files are available.
+
+## Is it safe to share the downloaded Python test sender?
+
+Not automatically. The script includes your sample encoded as **base64**. Review or mask the content before sharing it. [Test sender guide](/scenarios/test-sender).
+
+## Can I return to an earlier parser attempt?
+
+Open **Local Versions** in the top toolbar if the version was saved in that browser. Restore it and re-run validation before final generation.
+
+## Does a green result guarantee all logs from that vendor will work?
+
+No. It describes the source sample and current checks. Try additional event types and variable values rather than extrapolating from one example.
+
+## What Stellar Cyber dictionary and port does the current release use?
+
+Mapping guidance is based on **Stellar Cyber 7.0**. **Parser listener port (.conf)** defaults to **6801**. Neither setting establishes a live target import or availability of that port.
+
+## Can I save work without installing a parser?
+
+Yes. Open **Local Versions**, save a named checkpoint, compare up to **30** browser-local versions, or restore a saved version. These versions are stored in the current browser profile and are not encrypted by Parser Studio.
+
+[Local Versions](/workflows/local-versions) · [Source and port configuration](/workflows/parser-setup)

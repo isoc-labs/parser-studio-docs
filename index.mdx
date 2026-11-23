@@ -1,0 +1,78 @@
+---
+title: "Parser Studio | Start with your logs"
+sidebarTitle: "Overview"
+description: "You do not need to know the log format. Copy, analyze, review, and create."
+---
+
+<div className="xdr-hero">
+  <p className="xdr-kicker">XDR Labs / Parser Studio</p>
+  <h1 className="xdr-hero-title">Paste a log. We’ll guide you from there.</h1>
+  <p className="xdr-hero-copy">
+    You do not need to know whether a log is CEF, LEEF, JSON, or something else. Copy a few events into Parser Studio, click Analyze Logs, and follow the results to your parser files.
+  </p>
+  <div className="xdr-hero-actions">
+    <a className="xdr-hero-primary" href="/quickstart">Create my first parser →</a>
+    <a className="xdr-hero-secondary" href="/choose-workflow">What if my logs need help?</a>
+    <a className="xdr-hero-secondary" href="/videos/index">Watch real-log tutorials →</a>
+    <a className="xdr-hero-secondary" href="/ko/index">한국어 사용자 설명서 →</a>
+  </div>
+  <div className="xdr-signal-grid">
+    <div className="xdr-signal"><strong>1. Paste</strong><span>Copy a few complete events from your product.</span></div>
+    <div className="xdr-signal"><strong>2. Analyze</strong><span>Find out which events and fields were recognized.</span></div>
+    <div className="xdr-signal"><strong>3. Create</strong><span>Review names, check the sample and download validated draft files.</span></div>
+  </div>
+</div>
+
+**New practical exercise:** [Follow the relay-forwarded Syslog scenario](/scenarios/relay-forwarder) with two source events, the matching RFC3164-wrapped capture, a separate holdout, and verified on-screen steps. [Watch the relay video](/videos/relay).
+
+## What should I do after Analyze Logs?
+
+You start the **same way in every case**: open **Auto Parser**, paste logs, and press **Analyze Logs**. The next step depends on what the result says.
+
+<CardGroup cols={2}>
+  <Card title="Everything was parsed" icon="circle-check" href="/quickstart">
+    Continue to Review Fields → Map Fields → Create Parser. You do not need to change formats or write rules.
+  </Card>
+  <Card title="Some text needs attention" icon="triangle-exclamation" href="/scenarios/partial-event">
+    Select the flagged event, inspect the highlighted section, and use the recommended fix.
+  </Card>
+  <Card title="Parser Studio does not understand my logs" icon="comments" href="/workflows/chatgpt-assisted">
+    Use ChatGPT Assisted Parser, prepare a masked example, and review the suggested solution.
+  </Card>
+  <Card title="My product has several log types" icon="layer-group" href="/scenarios/mixed-events">
+    Paste representative examples of all types, review the event counts, and choose a combined or separate draft according to the supported result.
+  </Card>
+</CardGroup>
+
+## The normal path
+
+<div className="ps-flow"><span>Add Logs</span><b>→</b><span>Analyze Logs</span><b>→</b><span>Review Fields</span><b>→</b><span>Map Fields</span><b>→</b><span>Create Parser</span></div>
+
+![Auto Parser showing two of two security log events parsed completely and the Review Fields button](/images/current-02-completely-parsed.png)
+
+*Actual Parser Studio screen using fictional logs. With 2 of 2 events parsed completely, the user can click Review Fields.*
+
+## Current public Parser Studio tools
+
+The product exposes **Auto Parser** and **ChatGPT Assisted Parser** only. The old Wizard and Workbench are not user navigation paths.
+
+- **Parser identity:** Enter manufacturer and product, with optional version and **Parser listener port (.conf)** (default **6801**). [Configure your parser](/workflows/parser-setup).
+- **Stellar Cyber 7.0:** Review target names, data types, original values and vendor-only fields rather than choosing old mapping schemas.
+- **Up to 10 log types:** Click **Add Another Log Type** for Traffic, Threat, User and other types from one product.
+- **Local Versions:** Save, compare, and restore up to **30** browser-local checkpoints. [Learn more](/workflows/local-versions).
+- **Original source boundaries:** Explicitly mark relay prefix/postfix text, or declare known forwarder names. Upload original files when CRLF or exact UTF-8 byte offsets matter.
+- **Python Test Sender:** Optionally generate an offline standard-library Python script, with explicit operator input before sending.
+- **Input limit:** 64 KiB / 500 logical events per analysis. No browser DP upload, automatic sensor transmission or live target verification.
+
+## Pick an example that matches your situation
+
+<CardGroup cols={2}>
+  <Card title="My first five minutes" icon="rocket" href="/quickstart">Follow every click from pasted logs to the final file-creation screen.</Card>
+  <Card title="A red or yellow warning appears" icon="wrench" href="/scenarios/unknown-log">Find the exact unparsed text and the next action.</Card>
+  <Card title="My CSV data has no field names" icon="table" href="/scenarios/unnamed-values">Preserve all columns and confirm their names.</Card>
+  <Card title="Multiple event shapes" icon="layers" href="/scenarios/mixed-events">Review whether one combined parser is supported.</Card>
+</CardGroup>
+
+<Note>
+  Examples are fictional or publicly documented original vendor fixtures as labeled. Screenshots show the current public Web UI. Sample extraction and file creation do not establish native target compatibility.
+</Note>

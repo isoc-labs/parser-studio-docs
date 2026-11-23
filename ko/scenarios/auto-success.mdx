@@ -1,0 +1,51 @@
+---
+title: "모든 로그가 정상 파싱됐을 때"
+sidebarTitle: "정상 파싱"
+description: "완전 파싱된 원본 이벤트를 검토하고 파일 생성까지 진행."
+---
+
+# 모든 이벤트가 인식되었으면 무엇을 하나요?
+
+**상황:** Analyze Logs 결과가 2/2 또는 N/N 수정된 코드에서는 **log events structurally parsed**로 표시됩니다. 이는 원본 구조 처리 상태이지 개별 필드의 의미 검증 완료가 아닙니다. 이제 추출 필드의 의미를 확인한 뒤 파일을 만듭니다.
+
+## 연습 자료
+
+[Juniper SRX 원본 로그 다운로드](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/01-juniper-srx.log) · [실제 화면 교육 영상](/ko/videos/complete)
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-START */}
+
+### 영상과 동일한 로그 원본 직접 복사
+
+각 코드 블록의 **복사 아이콘**으로 모든 내용을 복사한 다음 Parser Studio에 붙여 넣으세요. 각 줄은 하나의 원본 이벤트이며 영상과 같은 결과를 재현하기 위해 수정하지 마세요.
+
+[전체 화면 영상 및 다운로드 자료](/ko/videos/complete).
+
+#### Juniper SRX 원본 2건 — Add Logs에 붙여 넣기
+
+**원본 크기:** 1510 bytes · **파일명:** `01-juniper-srx.log` · 영상과 같은 이벤트 줄 수를 유지합니다.
+
+```text
+<14>1 2019-11-14T09:37:51.184+01:00 SRX-GW1 RT_FLOW - RT_FLOW_SESSION_CREATE [junos@67.43.156.15 source-address="10.0.0.1" source-port="594" destination-address="67.43.156.13" destination-port="10400" connection-tag="0" service-name="icmp" nat-source-address="10.0.0.1" nat-source-port="594" nat-destination-address="67.43.156.13" nat-destination-port="10400" nat-connection-tag="0" src-nat-rule-type="N/A" src-nat-rule-name="N/A" dst-nat-rule-type="N/A" dst-nat-rule-name="N/A" protocol-id="1" policy-name="vpn_trust_permit-all" source-zone-name="vpn" destination-zone-name="trust" session-id-32="6093" username="N/A" roles="N/A" packet-incoming-interface="st0.0" application="UNKNOWN" nested-application="UNKNOWN" encrypted="UNKNOWN" application-category="N/A" application-sub-category="N/A" application-risk="1" application-characteristics="N/A"]
+<14>1 2019-11-14T11:12:46.573+01:00 SRX-GW1 RT_FLOW - RT_FLOW_SESSION_DENY [junos@67.43.156.15 source-address="10.0.0.26" source-port="37233" destination-address="67.43.156.13" destination-port="161" connection-tag="0" service-name="None" protocol-id="17" icmp-type="0" policy-name="MgmtAccess-trust-cleanup" source-zone-name="trust" destination-zone-name="junos-host" application="UNKNOWN" nested-application="UNKNOWN" username="N/A" roles="N/A" packet-incoming-interface=".local..0" encrypted="No" reason="Denied by policy" session-id-32="7087" application-category="N/A" application-sub-category="N/A" application-risk="1" application-characteristics="N/A"]
+```
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-END */}
+
+## 따라 하기
+
+1. **Auto Parser**에서 Manufacturer는 Juniper, Product는 SRX를 입력하고 원본 두 이벤트를 넣습니다.
+2. **Analyze Logs**를 누릅니다. 공개 연습 예시에서는 수정된 코드에서는 **2 of 2 log events structurally parsed**가 표시됩니다. 실제 생성 파서 필드와 표준 매핑은 별도로 확인해야 합니다.
+3. **Review Fields**에서 각 이벤트의 원본과 정책명, source/destination 주소, 포트를 비교합니다.
+4. **Map Fields**에서 Stellar Cyber 7.0 대상 필드와 값 자료형을 확인합니다.
+5. **Must fix before continuing**이 0인 경우 **Create Parser**로 이동합니다.
+6. **Run Final Test & Create Files**를 누르고 성공한 파일 패키지를 다운로드합니다.
+
+![완전 파싱을 표시하는 최신 Auto Parser UI](/images/current-02-completely-parsed.png)
+
+## 예상 결과
+
+원본 2개 이벤트가 모두 출력 가능 상태로 확인되고, 최종 샘플 테스트 뒤 CONF·파서 로직·ZIP 패키지가 표시됩니다. 이것은 특정 샘플 기준 결과일 뿐 다른 펌웨어나 실제 수신 성공을 증명하지는 않습니다.
+
+## 복구 방법
+
+결과가 다르면 원본 로그 줄바꿈과 버전, 입력 내용을 확인하세요. 일부 텍스트가 남으면 [부분 파싱 가이드](/ko/scenarios/partial-event)로 이동하세요.

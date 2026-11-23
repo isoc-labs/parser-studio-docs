@@ -1,0 +1,57 @@
+---
+title: "Map Fields | Fix output field names"
+sidebarTitle: "Fix Field Names"
+description: "How to accept recommended matches, correct mismatches and avoid changing source values."
+---
+
+# Map Fields: where should each value go?
+
+The prior step extracted the values. **Map Fields** chooses the names and types used for the final parser output. You do not have to know all field names beforehand; Parser Studio suggests them for review.
+
+![Map Fields screen with recommended matches, vendor-only fields and sample checks](/images/04-map-fields.png)
+
+*Recommended matches appear here, alongside the warnings that must be resolved.*
+
+## When the suggested mapping is already correct
+
+1. Look at **Matched to Stellar**, **Vendor-only fields**, and **Must fix before continuing**.
+2. Expand **Review field matches** if you need to inspect a specific field.
+3. Compare **Field found in the log**, **Stellar field name**, **Value type**, and the example values.
+4. If the mapping is correct and there are **0** mandatory fixes, continue by pressing **Create Parser**.
+
+You do not need to press every option. **Apply recommended matches** is helpful only when the suggested destination correctly matches the original field's meaning.
+
+## When a field was mapped incorrectly
+
+Suppose the source event contains an IP address, but the proposed field name would change its meaning.
+
+1. Find the matching source field under **Review field matches**.
+2. Use **Choose Stellar field** (when available) to select the intended field in the field catalog.
+3. Check **Value type** (for example, **IP address**, **Network port** or **Date & time**). Do not use a type just because it makes the warning disappear.
+4. Inspect **Check all sample logs** and **See what will change**.
+5. Reopen a second event using **Review event** and confirm the new destination receives the same original value.
+
+If you cannot confirm an official destination, keep the value under a vendor-specific field rather than forcing a misleading match.
+
+## If a warning blocks the next step
+
+| Finding | What to check |
+| --- | --- |
+| **Two fields use the same destination** | Give distinct source values distinct, valid destinations |
+| **Value does not match type** | Inspect all sample examples and select a compatible supported type |
+| **Source field is missing from some logs** | Determine whether the field is optional or wrongly named |
+| **Unverified or reserved field name** | Choose a verified catalog field or retain an appropriate vendor field |
+
+The original source value is not changed by a mapping edit.
+
+## Continue
+
+When **Must fix before continuing** is **0**, click **Create Parser**. If a previously working source becomes incomplete, return to the analysis step rather than inventing a mapping.
+
+[Complete the output step](/workflows/create-and-download) or [see a full normalization example](/scenarios/normalization).
+
+## Current dictionary baseline: Stellar Cyber 7.0
+
+The current public application displays **Stellar field dictionary 7.0.xs**. Check original source meaning, target name, and type. Do not infer an older version from the device firmware, and preserve ambiguous values as vendor-specific fields.
+
+![Current Stellar 7.0 mapping screen](/images/current-04-stellar7-mapping.png)

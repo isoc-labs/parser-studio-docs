@@ -1,0 +1,83 @@
+---
+title: "Scenario Playbooks: choose what happened"
+sidebarTitle: "Choose My Situation"
+description: "Find the next step based on what Auto Parser or ChatGPT showed, not the input format."
+---
+
+# Choose what happened after analyzing your logs
+
+**New: [RFC3164 relay-forwarded logs](/scenarios/relay-forwarder)** — compare pre-relay and forwarded text, declare `relay01`, verify the 2/2 extraction result and test a separate holdout.
+
+**Everyone starts in Auto Parser:** paste a few complete source events and click **Analyze Logs**. You do not have to identify a log format.
+
+## Video tutorials using original security-log examples
+
+<CardGroup cols={2}>
+  <Card title="Complete parsing: Juniper SRX" icon="circle-check" href="/videos/complete">Watch the entire source-to-parser workflow.</Card>
+  <Card title="Partially parsed: Sophos XG" icon="triangle-exclamation" href="/videos/partial">Inspect the unresolved source region while preserving extracted fields.</Card>
+  <Card title="ChatGPT recovery: Snort 3" icon="comments" href="/videos/unknown">Review and independently test a proposed additional parsing rule.</Card>
+  <Card title="Multiple types: FortiGate" icon="layers" href="/videos/multiple-types">Test traffic, web-filter and IPS samples in one parser project.</Card>
+</CardGroup>
+
+## Auto Parser: solve it inside the guided workflow
+
+<CardGroup cols={2}>
+  <Card title="All logs were recognized" icon="circle-check" href="/scenarios/auto-success">
+    Continue to Review Fields, confirm suggested mappings, then create and download the files.
+  </Card>
+  <Card title="Part of an event is missing" icon="triangle-exclamation" href="/scenarios/partial-event">
+    Select Problem to review, inspect the highlighted region, and try the recommended fix.
+  </Card>
+  <Card title="My product sends several event types" icon="layers" href="/scenarios/mixed-events">
+    Paste examples together, review every type, and create one combined draft only when supported.
+  </Card>
+  <Card title="Values have no reliable field names" icon="table" href="/scenarios/unnamed-values">
+    Keep all values with temporary names or enter trusted names and confirm the column order.
+  </Card>
+  <Card title="A field has the wrong output name" icon="arrow-left-right" href="/scenarios/normalization">
+    Correct its destination and type under Map Fields instead of rewriting extraction.
+  </Card>
+  <Card title="One event spans several lines" icon="align-left" href="/scenarios/long-events">
+    Review the message boundary, then continue only with a supported framing rule.
+  </Card>
+  <Card title="I want to save parser versions" icon="history" href="/scenarios/revisions">
+    Compare experiments and restore a browser-local draft.
+  </Card>
+  <Card title="I need changing sample logs" icon="file-code" href="/scenarios/test-sender">
+    Download and use the standalone Python test sender.
+  </Card>
+</CardGroup>
+
+## ChatGPT Assisted Parser: recover or verify a difficult case
+
+Use the left-side **ChatGPT Assisted Parser** menu when the automatic path cannot safely interpret the source or proposes a change that needs independent checking.
+
+<CardGroup cols={2}>
+  <Card title="Nothing in my log was understood" icon="comments" href="/scenarios/unknown-log">
+    Create a manually reviewed, masked prompt and paste the restricted JSON result back.
+  </Card>
+  <Card title="One missing field needs a new rule" icon="wrench" href="/scenarios/recipe-ai">
+    Preserve correct values and request one narrow change.
+  </Card>
+  <Card title="ChatGPT's answer was rejected" icon="circle-xmark" href="/scenarios/ai-invalid-response">
+    Read the error and ask for a supported structured correction.
+  </Card>
+  <Card title="The suggested fix needs additional proof" icon="check-double" href="/scenarios/ai-test-change">
+    Use other events as independent tests before approving the result.
+  </Card>
+</CardGroup>
+
+## A real screenshot of a flagged event
+
+![Parser Studio highlighting unresolved source text and showing the Fix with ChatGPT action](/images/07-unknown-analysis.png)
+
+*If any events need review, the application highlights the source section instead of silently discarding it.*
+
+## Which guide should I read first?
+
+- [Everything parsed correctly → finish the four steps](/quickstart)
+- [Some text is highlighted → repair only the affected part](/scenarios/partial-event)
+- [Completely unfamiliar logs → ChatGPT Assisted Parser](/scenarios/unknown-log)
+- [One product, many event types → review a combined parser](/scenarios/mixed-events)
+
+All images were captured from the real Parser Studio interface using fictional data. No extra parser mode is required.

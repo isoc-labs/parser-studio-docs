@@ -1,0 +1,39 @@
+---
+title: "필요한 부분만 ChatGPT로 추가 파싱"
+sidebarTitle: "부분 규칙 추가"
+description: "이미 추출된 필드를 보존하면서 특정 잔여 영역만 추출하는 검토 방법."
+---
+
+# 이미 찾은 필드를 유지하면서 미파싱 텍스트를 수정하기
+
+**상황:** 원본 메시지는 복잡하지만 주소·사용자·이벤트 시간 같은 중요한 값은 이미 추출됐고, 본문 일부만 미파싱 상태입니다.
+
+## 실제 공개 로그 원문 — 전체를 복사하세요
+
+아래 두 줄은 [Elastic integrations Sophos XG 공개 원본](https://github.com/elastic/integrations/tree/ee918d03f4a90dacd32673546c64a633308796ef/packages/sophos)입니다. 실제 공개 웹 UI에서 **0 of 2 log events parsed completely**로 검증한 부분 파싱 사례와 동일합니다. [원본 파일 내려받기](https://raw.githubusercontent.com/xdr-labs/parser-studio-docs/main/practice/02-sophos-xg.log).
+
+```text
+device="SFW" date=2017-01-31 time=14:16:19 timezone="IST" device_name="CR750iNG-XP" device_id=C44313350024- P29PUA log_id=010101600001 log_type="Firewall" log_component="Firewall Rule" log_subtype="Allowed" status="Allow" priority=Information duration=30 fw_rule_id=2 policy_type=2 user_name="gaurav" user_gp="Open Group" iap=1 ips_policy_id=0 appfilter_policy_id=1 application="Youtube Video Streaming" application_risk=3 application_technology="Browser Based" application_category="Streaming Media" in_interface="PortA" out_interface="PortB" src_mac=00:00:00:00:00:00 src_ip=10.198.47.71 src_country_code=R1 dst_ip=81.2.69.143 dst_country_code=USA protocol="UDP" src_port=59859 dst_port=53 sent_pkts=1 recv_pkts=1 sent_bytes=77 recv_bytes=105 tran_src_ip=81.2.69.144 tran_src_port=0 tran_dst_ip= tran_dst_port=0 srczonetype="LAN" srczone="LAN" dstzonetype="WAN" dstzone="WAN" dir_disp="" connevent="Stop" connid="185246656" vconnid="" hb_health="No Heartbeat"
+device="SFW" date=2018-05-30 time=13:14:26 timezone="IST" device_name="XG125w" device_id=SFDemo-763180a log_id=010102600002 log_type="Firewall" log_component="Firewall Rule" log_subtype="Denied" status="Deny" priority=Information duration=0 fw_rule_id=1 policy_type=1 user_name="" user_gp="" iap=2 ips_policy_id=0 appfilter_policy_id=0 application="" application_risk=0 application_technology="" application_category="" in_interface="Port1" out_interface="Port2.531" src_mac=b8:97:5a:5b:0f:fd src_ip=10.198.32.19 src_country_code= dst_ip=1.128.3.4 dst_country_code= protocol="ICMP" icmp_type=8 icmp_code=0 sent_pkts=0 recv_pkts=0 sent_bytes=0 recv_bytes=0 tran_src_ip= tran_src_port=0 tran_dst_ip= tran_dst_port=0 srczonetype="" srczone="" dstzonetype="" dstzone="" dir_disp="" connid="" vconnid="" hb_health="No Heartbeat" message="" appresolvedby="Signature
+```
+
+## 따라 하기
+
+1. **Problem to review**에서 미파싱 이벤트를 선택합니다.
+2. **Text not yet assigned to fields**를 확인하고 **Values already found**의 원본 값 목록을 보존합니다.
+3. 기본 **Problem to review** 결과에서 **Original event**와 **Text not yet assigned to fields**를 비교합니다. 제거된 Tools & Diagnostics 메뉴를 찾을 필요는 없습니다.
+4. **Fix with ChatGPT**를 누릅니다. 자동으로 생성된 프롬프트에는 원본의 정확한 영역과 보존해야 할 값이 포함될 수 있습니다.
+5. 원본이 고객 데이터라면 민감정보를 마스킹한 뒤 **Copy Prompt**를 수동으로 사용합니다.
+6. ChatGPT에 제품에서 지원하는 **ParserRecipe v0.2**의 제한된 단계만 요청합니다.
+7. 제안 JSON을 **Test Proposed Fix**로 테스트하고 다른 원본 예시까지 통과할 때만 승인합니다.
+8. 기존 필드가 손실되지 않았는지 비교합니다.
+
+## 예상 결과
+
+승인된 규칙은 수정 대상 부분을 처리하며 기존 올바른 값을 유지합니다. 미지원 영역이 남으면 성공으로 표시하지 않습니다.
+
+## 복구 방법
+
+규칙이 기존 필드를 덮어쓰거나 미파싱 원본을 잃게 만들면 거부되는 것이 정상입니다. 미해결 영역을 무리하게 삭제하지 않고 더 좁은 변경을 검토합니다.
+
+[실제 복잡한 Sophos 사례](/ko/videos/partial) · [독립 샘플 테스트](/ko/workflows/holdout-validation)

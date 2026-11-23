@@ -1,0 +1,91 @@
+---
+title: "Complete Parsing: Real Juniper SRX Logs"
+sidebarTitle: "01 \u00b7 Complete Parsing"
+description: "Watch a complete source-to-parser workflow using published Juniper SRX RT_FLOW events."
+---
+
+# Complete Parsing: Real Juniper SRX Logs
+
+English narration and permanently visible English captions accompany this recording of the October 31, 2026 Parser Studio Web UI. The examples come from published original manufacturer documentation or upstream-authored test fixtures, not from fabricated demo messages.
+
+**Recording vs. corrected build:** The October 31 video predates the RFC5424 SD extraction fix ([Parser Studio PR #198](https://github.com/xdr-labs/parser-studio/pull/198)). The old on-screen *parsed completely* label referred to source structure, not to verified individual security fields. The updated steps below apply **after that PR is merged and deployed**. The historical video itself has not been re-recorded.
+
+<video controls playsInline preload="metadata" width="100%" poster="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/01-juniper-srx-complete/poster.png">
+  <source src="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/01-juniper-srx-complete/scenario-english.mp4" type="video/mp4" />
+  Your browser does not support native video playback.
+</video>
+
+[Watch in a dedicated video player](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/01-juniper-srx-complete/watch.html) · [Download MP4](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/01-juniper-srx-complete/scenario-english.mp4) · [English SRT captions](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/01-juniper-srx-complete/subtitles-en.srt) · [Read the English transcript](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/01-juniper-srx-complete/narration-en.md)
+
+## Practice along with the video
+
+Keep this page open to pause or replay the demonstration while working in a second tab.
+
+**Before you begin:** [Download all practice samples as a ZIP](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/practice/practice-all.zip) · [Open Parser Studio](https://app.parser.xdr.ooo/)
+
+- [Download the original Juniper SRX logs](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/01-juniper-srx.log)
+
+**Use the source files above exactly as shown in the video.** Each file contains the public documented sample events used during the recording, with source attribution and SHA-256 checksums in the ZIP bundle.
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-START */}
+
+### Copy the exact logs used in the video
+
+Use the **copy icon** on each code block, then paste the entire content into Parser Studio. Each line is one unmodified event from the published source. Do not omit difficult events or replace values to force a passing result.
+
+#### Copy the two original Juniper SRX RT_FLOW events into Add Logs
+
+**Exact source:** 1510 bytes · **File:** `01-juniper-srx.log` · Keep both lines when the file has two events.
+
+```text
+<14>1 2019-11-14T09:37:51.184+01:00 SRX-GW1 RT_FLOW - RT_FLOW_SESSION_CREATE [junos@67.43.156.15 source-address="10.0.0.1" source-port="594" destination-address="67.43.156.13" destination-port="10400" connection-tag="0" service-name="icmp" nat-source-address="10.0.0.1" nat-source-port="594" nat-destination-address="67.43.156.13" nat-destination-port="10400" nat-connection-tag="0" src-nat-rule-type="N/A" src-nat-rule-name="N/A" dst-nat-rule-type="N/A" dst-nat-rule-name="N/A" protocol-id="1" policy-name="vpn_trust_permit-all" source-zone-name="vpn" destination-zone-name="trust" session-id-32="6093" username="N/A" roles="N/A" packet-incoming-interface="st0.0" application="UNKNOWN" nested-application="UNKNOWN" encrypted="UNKNOWN" application-category="N/A" application-sub-category="N/A" application-risk="1" application-characteristics="N/A"]
+<14>1 2019-11-14T11:12:46.573+01:00 SRX-GW1 RT_FLOW - RT_FLOW_SESSION_DENY [junos@67.43.156.15 source-address="10.0.0.26" source-port="37233" destination-address="67.43.156.13" destination-port="161" connection-tag="0" service-name="None" protocol-id="17" icmp-type="0" policy-name="MgmtAccess-trust-cleanup" source-zone-name="trust" destination-zone-name="junos-host" application="UNKNOWN" nested-application="UNKNOWN" username="N/A" roles="N/A" packet-incoming-interface=".local..0" encrypted="No" reason="Denied by policy" session-id-32="7087" application-category="N/A" application-sub-category="N/A" application-risk="1" application-characteristics="N/A"]
+```
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-END */}
+
+### Follow the current on-screen steps
+
+1. Open **Auto Parser** and enter **Manufacturer: Juniper**, **Product: SRX**. The firmware version of these examples is not asserted.
+2. Paste both unchanged source records into **Add Logs** and click **Analyze Logs**. On the corrected build, verify **2 of 2 log events structurally parsed**. This confirms source structure, not completed field mapping or native execution.
+3. Enter **Review Fields**, compare independently extracted source/destination IP addresses, ports, zones, policy names and session IDs with the source, then open **Map Fields**. For the DENY event, check source IP `10.0.0.26`, destination IP `67.43.156.13`, ports `37233` and `161`, and policy `MgmtAccess-trust-cleanup`. The `RT_FLOW_SESSION_DENY` message ID does not prove that a normalized `action` field was generated.
+4. Review Stellar Cyber 7.0 mapping suggestions and vendor-only values. RFC5424 SD parameters are selectable under `syslog_sd.element_1.params.*` in the corrected build; mappings still require review. Continue to **Create Parser**.
+5. Click **Run Final Test & Create Files**. Only after it succeeds, choose **Download Parser Package**. No live target installation is implied.
+
+### Video chapter timestamps (October 31 recording)
+
+| Time | Actual recorded step |
+|---|---|
+| 00:01 | Complete Parsing |
+| 00:08 | Identify The Product |
+| 00:13 | Paste Source Logs |
+| 00:18 | Analyze Logs |
+| 00:25 | Verify Two Events |
+| 00:32 | Review Fields |
+| 00:39 | Map Fields |
+| 00:45 | Create Draft |
+| 00:50 | Final Sample Check |
+| 00:57 | Download Files |
+| 01:03 | Practice Complete |
+
+*The listed times come from the actual October 31 recording, not the retired version.*
+
+## Expected review outcome
+
+On the corrected code, both source records are structurally recognized: the CREATE event provides 30 independent SD-PARAM values and the DENY event provides 23. This is structural extraction, not automatic Stellar semantic certification. Verify IPs, ports, zones and policy against the original records, and verify actual generated-parser output. A passing sample test produces a DRAFT pair, not a certified Stellar DP deployment.
+
+Do not treat successful source extraction or generated files as evidence of full vendor/firmware coverage, target import acceptance, or live Stellar Cyber deployment compatibility.
+
+## Recovery path
+
+For a different log shape, keep the original records and examine the highlighted source spans, following the [related workflow](/scenarios/auto-success). Only apply additional parsing rules after different examples pass a separate regression test. Never delete failing events merely to obtain a passing total.
+
+## Original log provenance
+
+- [Elastic integrations: Juniper SRX upstream test fixtures](https://github.com/elastic/integrations/tree/ee918d03f4a90dacd32673546c64a633308796ef/packages/juniper_srx/data_stream/log/_dev/test/pipeline)
+
+<Note>
+Customer logs may include private information. Review, sanitize and manually approve any excerpt before copying it into an external ChatGPT conversation. The Auto Parser does not automatically share those logs.
+</Note>
+
+[All video tutorials](/videos/index) · [Launch Parser Studio](https://app.parser.xdr.ooo/)

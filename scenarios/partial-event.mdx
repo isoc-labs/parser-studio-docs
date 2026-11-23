@@ -1,0 +1,67 @@
+---
+title: "One log is only partly parsed | Fix the highlighted section"
+sidebarTitle: "Some Fields Missing"
+description: "What to click when some fields are correct but one portion of an event is not understood."
+---
+
+# Some fields are correct, but part of my log is missing
+
+**Watch:** [English tutorial using published real log samples](/videos/partial).
+
+**Situation:** You pasted several logs, clicked **Analyze Logs**, and the result says some events need attention. A few fields look right, but the application has highlighted a particular region.
+
+## Real complex vendor example
+
+This scenario does not rely on a deliberately malformed quotation mark. Use **unaltered public Sophos XG firewall records** that contain dozens of key/value fields. The current Auto Parser recognizes many fields but cannot account for the entire source.
+
+- [Download the original Sophos firewall logs](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/02-sophos-xg.log).
+- [Watch the partial-parsing video and follow-along steps](/videos/partial).
+
+For the documented two-event sample, **0 of 2 events parsed completely** is correct despite many preserved extracted fields. The challenge is the remaining raw source region.
+
+![Unresolved original Sophos region in current UI](/images/current-09-unparsed-region.png)
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-START */}
+
+### Copy the exact logs used in the video
+
+Use the **copy icon** on each code block, then paste the entire content into Parser Studio. Each line is one unmodified event from the published source. Do not omit difficult events or replace values to force a passing result.
+
+[Full video, exact files and chapter timestamps](/videos/partial).
+
+#### Copy both complex Sophos XG Firewall events into Add Logs
+
+**Exact source:** 1821 bytes · **File:** `02-sophos-xg.log` · Keep both lines when the file has two events.
+
+```text
+device="SFW" date=2017-01-31 time=14:16:19 timezone="IST" device_name="CR750iNG-XP" device_id=C44313350024- P29PUA log_id=010101600001 log_type="Firewall" log_component="Firewall Rule" log_subtype="Allowed" status="Allow" priority=Information duration=30 fw_rule_id=2 policy_type=2 user_name="gaurav" user_gp="Open Group" iap=1 ips_policy_id=0 appfilter_policy_id=1 application="Youtube Video Streaming" application_risk=3 application_technology="Browser Based" application_category="Streaming Media" in_interface="PortA" out_interface="PortB" src_mac=00:00:00:00:00:00 src_ip=10.198.47.71 src_country_code=R1 dst_ip=81.2.69.143 dst_country_code=USA protocol="UDP" src_port=59859 dst_port=53 sent_pkts=1 recv_pkts=1 sent_bytes=77 recv_bytes=105 tran_src_ip=81.2.69.144 tran_src_port=0 tran_dst_ip= tran_dst_port=0 srczonetype="LAN" srczone="LAN" dstzonetype="WAN" dstzone="WAN" dir_disp="" connevent="Stop" connid="185246656" vconnid="" hb_health="No Heartbeat"
+device="SFW" date=2018-05-30 time=13:14:26 timezone="IST" device_name="XG125w" device_id=SFDemo-763180a log_id=010102600002 log_type="Firewall" log_component="Firewall Rule" log_subtype="Denied" status="Deny" priority=Information duration=0 fw_rule_id=1 policy_type=1 user_name="" user_gp="" iap=2 ips_policy_id=0 appfilter_policy_id=0 application="" application_risk=0 application_technology="" application_category="" in_interface="Port1" out_interface="Port2.531" src_mac=b8:97:5a:5b:0f:fd src_ip=10.198.32.19 src_country_code= dst_ip=1.128.3.4 dst_country_code= protocol="ICMP" icmp_type=8 icmp_code=0 sent_pkts=0 recv_pkts=0 sent_bytes=0 recv_bytes=0 tran_src_ip= tran_src_port=0 tran_dst_ip= tran_dst_port=0 srczonetype="" srczone="" dstzonetype="" dstzone="" dir_disp="" connid="" vconnid="" hb_health="No Heartbeat" message="" appresolvedby="Signature
+```
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-END */}
+
+## Walkthrough
+
+1. Stay in **Auto Parser → Add Logs** after clicking **Analyze Logs**.
+2. If multiple events are flagged, choose one from **Problem to review**.
+3. Read **What needs attention**. Then look at **Original event** to see the highlighted fragment.
+4. Read **Recommended fix**. If the full original source is present but some grammar is unsupported, preserve the existing fields and inspect the exact residual region before selecting an additional reviewed rule.
+5. If the source is complete but needs an additional supported rule, click **Fix with ChatGPT**. A reviewable prompt appears—**inspect and mask the original text** before copying it outside the browser.
+6. Return a supported structured result, test it against additional source events, and apply only a change that passes.
+7. Click **Analyze Logs** again if the source has changed. Proceed to **Review Fields** only when no blocking events remain.
+
+## Expected review outcome
+
+The result should identify each event as completely parsed or as a reviewed, supported candidate. Previously correct fields must remain unchanged. Once the **Review Fields** button becomes available, continue through [mapping and file creation](/quickstart).
+
+## Recovery path
+
+Use the left navigation **ChatGPT Assisted Parser** and inspect the same original log source before preparing a manually shared prompt. There is no separate masked-example editor. Follow [the full assistant workflow](/workflows/chatgpt-assisted).
+
+<Warning>
+  Do not remove a warning by deleting the problematic row. Keeping all important event types is more useful than creating a parser that quietly ignores some of them.
+</Warning>
+
+### Extra diagnostic controls
+
+The normal **Analyze Logs** result already provides **Problem to review**, **Original event**, **Values already found** and **Text not yet assigned to fields**. Inspect those areas directly. The old Tools & Diagnostics menu is no longer part of the product. Use **Fix with ChatGPT** only for a reviewed, tested rule and never delete the unresolved original source.

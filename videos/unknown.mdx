@@ -1,0 +1,189 @@
+---
+title: "Unrecognized Snort Alert: ChatGPT-Assisted Recovery"
+sidebarTitle: "03 \u00b7 Unrecognized Snort Alert"
+description: "Use a reviewed bounded parser recipe with independent documented alert examples."
+---
+
+# Unrecognized Snort Alert: ChatGPT-Assisted Recovery
+
+English narration and permanently visible English captions accompany this recording of the October 31, 2026 Parser Studio Web UI. The examples come from published original manufacturer documentation or upstream-authored test fixtures, not from fabricated demo messages.
+
+<video controls playsInline preload="metadata" width="100%" poster="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/03-snort-unrecognized-chatgpt/poster.png">
+  <source src="https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/03-snort-unrecognized-chatgpt/scenario-english.mp4" type="video/mp4" />
+  Your browser does not support native video playback.
+</video>
+
+[Watch in a dedicated video player](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/03-snort-unrecognized-chatgpt/watch.html) · [Download MP4](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/03-snort-unrecognized-chatgpt/scenario-english.mp4) · [English SRT captions](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/03-snort-unrecognized-chatgpt/subtitles-en.srt) · [Read the English transcript](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/03-snort-unrecognized-chatgpt/narration-en.md)
+
+## Practice along with the video
+
+Keep this page open to pause or replay the demonstration while working in a second tab.
+
+**Before you begin:** [Download all practice samples as a ZIP](https://app.parser.xdr.ooo/training/parser-studio-authentic-20261031/practice/practice-all.zip) · [Open Parser Studio](https://app.parser.xdr.ooo/)
+
+- [Download the original Snort alert](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/03-snort-alert.log)
+- [Download the two different holdout alerts](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/03-snort-holdout.log)
+- [Optional: download the reviewed educational JSON recipe](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/03-snort-reviewed-recipe.json)
+
+**Use the source files above exactly as shown in the video.** Each file contains the public documented sample events used during the recording, with source attribution and SHA-256 checksums in the ZIP bundle.
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-START */}
+
+### Copy the exact logs used in the video
+
+Use the **copy icon** on each code block, then paste the entire content into Parser Studio. Each line is one unmodified event from the published source. Do not omit difficult events or replace values to force a passing result.
+
+#### Original Snort 3 alert_fast event — paste this one line into Add Logs
+
+**Exact source:** 225 bytes · **File:** `03-snort-alert.log` · Keep both lines when the file has two events.
+
+```text
+07/16-09:23:39.153899 [**] [1:1000000:0] "SERVER-WEBAPP Apache Log4j arbitrary code execution attempt" [**] [Classification: Attempted User Privilege Gain] [Priority: 1] [AppID: HTTP] {TCP} 192.168.1.2:50284 -> 192.168.2.3:80
+```
+
+#### Two independent Snort alerts — paste these ONLY into Additional test logs
+
+**Exact source:** 342 bytes · **File:** `03-snort-holdout.log` · Keep both lines when the file has two events.
+
+```text
+07/16-09:23:39.153899 [would_drop] [**] [1:1000000:0] "SERVER-WEBAPP Apache Log4j arbitrary code execution attempt" [**] [Classification: Attempted User Privilege Gain] [Priority: 1] {TCP} 192.168.1.2:50284 -> 192.168.2.3:80
+06/25-00:23:53.106340 [**] [1:1000001:1] "LOCAL UDP test" [**] [Priority: 0] {UDP} 127.0.0.1:34392 -> 127.0.0.1:31337
+```
+
+#### Optional: the reviewed demonstration ParserRecipe JSON
+
+This JSON is an **educational proposal, not an automatically trusted AI answer**. Analyze the one original event first, test this proposal with two independent alerts, and approve the tested change explicitly.
+
+Download the same reviewed JSON: [03-snort-reviewed-recipe.json](https://app.parser.xdr.ooo/training/parser-studio-real-scenarios-20261021/practice/03-snort-reviewed-recipe.json).
+
+```json
+{
+  "contract": "parser-studio.recipe.v0.2",
+  "schemaRevision": "0.2",
+  "compilerMode": "REVIEW_ONLY",
+  "projectId": "draft-snort_snort_3",
+  "sourceFormat": "regex",
+  "bodyFormat": "regex",
+  "sample": {
+    "sha256": "a3e78f6e4660338664eae29c4be53f5714eebfb2f0d38f84ba1aad0224226cc4",
+    "events": 1
+  },
+  "stages": [
+    {
+      "op": "split_event",
+      "boundary": "single-line"
+    },
+    {
+      "op": "parse_regex",
+      "pattern": "^(?<raw_event>.*?(?:\\[Classification: (?<classification>[^\\]]+)\\] )?\\[Priority: (?<priority>\\d+)\\](?: \\[AppID: (?<appid>[^\\]]+)\\])? \\{(?<protocol>\\w+)\\} (?<srcendpoint>[\\d.]+:\\d+) -> (?<dstendpoint>[\\d.]+:\\d+))$"
+    },
+    {
+      "op": "map_field",
+      "source": "raw_event",
+      "target": "raw_event",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "classification",
+      "target": "classification",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "priority",
+      "target": "priority",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "appid",
+      "target": "appid",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "protocol",
+      "target": "protocol",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "srcendpoint",
+      "target": "srcendpoint",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "map_field",
+      "source": "dstendpoint",
+      "target": "dstendpoint",
+      "group": "vendor_fields",
+      "data_type": "string"
+    },
+    {
+      "op": "classify",
+      "defaultIndex": "syslog",
+      "rules": []
+    },
+    {
+      "op": "fallback_unparsed",
+      "mode": "retain_unparsed"
+    }
+  ],
+  "nativeVerified": false,
+  "targetVerified": false
+}
+```
+
+{/* PARSER-STUDIO-EXACT-SAMPLE-END */}
+
+### Follow the current on-screen steps
+
+1. Open **Auto Parser**, enter manufacturer **Snort** and product **Snort 3**, then paste only the one original alert.
+2. Click **Analyze Logs** and inspect the **0 of 1 log event parsed completely** result. Preserve the whole alert and its unparsed regions.
+3. Use **Fix with ChatGPT** and inspect the generated source-bearing prompt. **Prepare ChatGPT Prompt**, then **Copy Prompt** only after confirming that external sharing is allowed.
+4. The new recording ends at the prompt-review stage; it does **not** pretend an external ChatGPT result was returned. To continue yourself, paste the model response into **ChatGPT result JSON** and select **Check ChatGPT Result**.
+5. For a reviewable proposal, add the two independent holdout alerts under **Different examples to test the fix** and check **Confirm test examples are different**. Test before applying or downloading. The optional recipe displayed above is educational, not automatically trusted.
+
+### Video chapter timestamps (October 31 recording)
+
+| Time | Actual recorded step |
+|---|---|
+| 00:01 | Unknown Format |
+| 00:07 | Set Product Identity |
+| 00:12 | Paste Alert |
+| 00:16 | Run Analysis |
+| 00:21 | Do Not Guess |
+| 00:27 | Open Chatgpt Assistance |
+| 00:32 | Copy Prompt Manually |
+| 00:39 | Check Independent Samples |
+| 00:45 | Verify Before Apply |
+
+*The listed times come from the actual October 31 recording, not the retired version.*
+
+## Expected review outcome
+
+The original Snort alert_fast sample is not fully parsed at first. The updated video demonstrates the actual prompt preparation and privacy boundary; an external ChatGPT answer and independent holdout validation remain separate user steps.
+
+Do not treat successful source extraction or generated files as evidence of full vendor/firmware coverage, target import acceptance, or live Stellar Cyber deployment compatibility.
+
+## Recovery path
+
+For a different log shape, keep the original records and examine the highlighted source spans, following the [related workflow](/scenarios/unknown-log). Only apply additional parsing rules after different examples pass a separate regression test. Never delete failing events merely to obtain a passing total.
+
+## Original log provenance
+
+- [Official Snort 3 Rule Writing Guide: Alert Logging](https://docs.snort.org/start/alert_logging)
+- [Public Snort fast-alert test example](https://www.simplified.guide/snort/alert-log-view)
+
+<Note>
+Customer logs may include private information. Review, sanitize and manually approve any excerpt before copying it into an external ChatGPT conversation. The Auto Parser does not automatically share those logs.
+</Note>
+
+[All video tutorials](/videos/index) · [Launch Parser Studio](https://app.parser.xdr.ooo/)
