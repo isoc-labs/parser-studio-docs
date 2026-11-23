@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://parser.xdr.ooo/">User Guide</a> · <a href="quickstart.mdx">Quickstart</a> · <a href="scenarios/index.mdx">Scenario Playbooks</a> · <a href="https://github.com/xdr-labs/parser-studio">Application Source</a>
+  <a href="https://parser.xdr.ooo/">User Guide</a> · <a href="quickstart.mdx">Quickstart</a> · <a href="scenarios/index.mdx">Scenario Playbooks</a> · <a href="https://github.com/isoc-labs/parser-studio">Application Source</a>
 </p>
 
 <p align="center">
@@ -63,7 +63,7 @@
 
 This repository contains English and Korean MDX user guide pages, task-based walkthroughs, screenshots captured from the actual Parser Studio Web UI with fictional logs, and a small local documentation validator. Visual styling follows the XDR Labs documentation family.
 
-Documentation review: [Parser Studio main at `a4b4e2f`](https://github.com/xdr-labs/parser-studio/commit/a4b4e2fba54588fa2b9807e1cfeed49190061927) (October 30, 2026).
+Documentation review: [Parser Studio main at `a4b4e2f`](https://github.com/isoc-labs/parser-studio/commit/a4b4e2fba54588fa2b9807e1cfeed49190061927) (October 30, 2026).
 
 ## Documentation checks
 

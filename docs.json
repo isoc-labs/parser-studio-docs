@@ -106,7 +106,7 @@
           "links": [
             {
               "label": "XDR Labs",
-              "href": "https://xdr.ooo"
+              "href": "https://isoc.ooo"
             },
             {
               "label": "영어 문서",
@@ -213,11 +213,11 @@
     "links": [
       {
         "label": "XDR Labs",
-        "href": "https://xdr.ooo"
+        "href": "https://isoc.ooo"
       },
       {
         "type": "github",
-        "href": "https://github.com/xdr-labs/parser-studio"
+        "href": "https://github.com/isoc-labs/parser-studio"
       }
     ],
     "primary": {
