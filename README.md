@@ -63,6 +63,8 @@
 
 This repository contains English and Korean MDX user guide pages, task-based walkthroughs, screenshots captured from the actual Parser Studio Web UI with fictional logs, and a small local documentation validator. Visual styling follows the XDR Labs documentation family.
 
+Targeted source reconciliation (November 26, 2026): [Parser Studio source baseline](https://github.com/isoc-labs/parser-studio/commit/14dcacddff48365001bfca2653c4466037d023b0). English and Korean quickstart and mapping text checked against source; existing screenshots and videos are historical illustrations, not new exact-head browser evidence.
+
 Documentation review: [Parser Studio main at `a4b4e2f`](https://github.com/isoc-labs/parser-studio/commit/a4b4e2fba54588fa2b9807e1cfeed49190061927) (October 30, 2026).
 
 ## Documentation checks

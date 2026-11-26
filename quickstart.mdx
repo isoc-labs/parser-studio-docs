@@ -18,8 +18,6 @@ Open Parser Studio and choose **Auto Parser** in the left menu. You should see t
 
 *Start in Auto Parser. The first four stages are Add Logs, Review Fields, Map Fields and Create Parser. No separate diagnostics menu is needed.*
 
-Enter **Manufacturer** and **Product** before generating. **Version** is optional if known. The generated CONF listener uses **Parser listener port (.conf)**, which defaults to **6801**. No live system is configured by merely downloading parser files.
-
 ## Step 2 — Paste the logs and analyze
 
 Paste these two fictional events into the large box under **Add Logs**:
@@ -29,7 +27,9 @@ Paste these two fictional events into the large box under **Add Logs**:
 {"timestamp":"2026-10-18T09:00:01Z","action":"deny","src_ip":"192.0.2.11","dst_ip":"203.0.113.5","dst_port":22,"user":"demo-admin"}
 ```
 
-Click the orange **Analyze Logs** button. **Do not select JSON, CEF, LEEF, or a regular expression.** Parser Studio will inspect the records.
+After pasting, enter **Manufacturer** and **Product** before generating. **Version** is optional if known. The generated CONF listener uses **Parser listener port (.conf)**, which defaults to **6801**. No live system is configured by merely downloading parser files.
+
+Click the orange **Analyze Logs** button. The original sample is sent to the Parser Studio server on the same origin for analysis; no automatic transfer to ChatGPT occurs. **Do not select JSON, CEF, LEEF, or a regular expression.** Parser Studio will inspect the records.
 
 If the corrected build shows **2 of 2 log events structurally parsed**, click **Review Fields**. This confirms source structure only, not the final field mappings or native runtime. If the count is incomplete, follow [what to do with a warning](/scenarios/unknown-log) first.
 
