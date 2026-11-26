@@ -14,12 +14,12 @@ The prior step extracted the values. **Map Fields** chooses the names and types 
 
 ## When the suggested mapping is already correct
 
-1. Look at **Matched to Stellar**, **Vendor-only fields**, and **Must fix before continuing**.
-2. Expand **Review field matches** if you need to inspect a specific field.
+1. Look at **Matched to Stellar**, **Vendor fields retained**, and **Must fix before continuing**.
+2. Find **Review field matches** if you need to inspect a specific field.
 3. Compare **Field found in the log**, **Stellar field name**, **Value type**, and the example values.
 4. If the mapping is correct and there are **0** mandatory fixes, continue by pressing **Create Parser**.
 
-You do not need to press every option. **Apply recommended matches** is helpful only when the suggested destination correctly matches the original field's meaning.
+You do not need to change a correct automatic suggestion. Check the original value and its meaning before accepting the destination.
 
 ## When a field was mapped incorrectly
 
@@ -32,6 +32,10 @@ Suppose the source event contains an IP address, but the proposed field name wou
 5. Reopen a second event using **Review event** and confirm the new destination receives the same original value.
 
 If you cannot confirm an official destination, keep the value under a vendor-specific field rather than forcing a misleading match.
+
+## Mapping multiple event types
+
+When **Event type to map** is shown, select each event type and review, add, change or remove its field matches manually. Changes to a type-specific match do not change the other types; changes to a shared match apply to all types. If a change is refused, finish or undo it before continuing. Use **Keep as vendor field** for a safe unmapped source path when appropriate. A removed match retains the original vendor field when the draft preserves unmapped values; **Leave out of output** explicitly omits it from the generated output. The original log remains unchanged.
 
 ## If a warning blocks the next step
 
